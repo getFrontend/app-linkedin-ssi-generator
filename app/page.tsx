@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, ChangeEvent  } from 'react'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css'
 import { motion } from 'framer-motion'
@@ -11,6 +11,7 @@ export default function LinkedInSSIClone() {
   const [components, setComponents] = useState<{ name: string; score: number; color: string }[]>([])
   const [industryRank, setIndustryRank] = useState(0)
   const [networkRank, setNetworkRank] = useState(0)
+  const [value, setValue] = useState<number>(1);
 
   const calculateComponents = (score: number) => {
     const total = score
@@ -52,21 +53,38 @@ export default function LinkedInSSIClone() {
     }
   }
 
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const inputValue = e.target.value;
+
+    const numericValue = Number(inputValue);
+
+    if (numericValue > 100) {
+      setValue(100);
+    } else if (numericValue < 1) {
+      setValue(1);
+    } else {
+      setValue(numericValue);
+    }
+  };
+
   if (ssiScore === null) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-[#f3f6f8]">
-        <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-md">
-          <h2 className="text-2xl font-bold mb-4">Enter your Social Selling Index</h2>
+        <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-md flex flex-col">
+          <h2 className="text-2xl text-center font-bold mb-4">Enter your Social Selling Index</h2>
+          <p className="mb-6 text-center">from 0 to 100 points</p>
           <input
             type="number"
             name="ssi"
+            value={value}
+            onChange={handleChange}
             min="1"
             max="100"
             required
-            className="w-full p-2 border border-gray-300 rounded mb-4"
+            className="self-center w-2xl p-4 border border-gray-300 rounded mb-10 text-center text-4xl text-[#0a66c2]"
           />
-          <button type="submit" className="w-full bg-[#0a66c2] text-white p-2 rounded hover:bg-[#084482]">
-            Generate SSI Page
+          <button type="submit" className="w-full bg-[#0a66c2] text-white px-2 py-4 rounded-lg hover:bg-[#0090ff]">
+            Generate LinkedIn SSI
           </button>
         </form>
       </div>

@@ -22,7 +22,7 @@ export default function LinkedInSSIClone() {
       'Engage with insights',
       'Build relationships'
     ]
-    const colors = ['#f5824c', '#8f6bce', '#008391', '#007bb5']
+    const colors = ['#e55800', '#827be9', '#087889', '#0091ca']
     const result = []
     for (let i = 0; i < 3; i++) {
       const componentScore = Math.min(Math.floor(Math.random() * remaining), 25)
@@ -69,7 +69,7 @@ export default function LinkedInSSIClone() {
 
   if (ssiScore === null) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-[#f3f6f8]">
+      <div className="flex items-center justify-center min-h-screen bg-[#f5f5f5]">
         <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-md flex flex-col">
           <h2 className="text-2xl text-center font-bold mb-4">Enter your Social Selling Index</h2>
           <p className="mb-6 text-center">from 0 to 100 points</p>
@@ -92,14 +92,14 @@ export default function LinkedInSSIClone() {
   }
 
   return (
-    <div className="min-h-screen bg-[#f3f6f8]">
-      <header className="bg-[#0073b1] text-white p-4">
-        <div className="max-w-6xl mx-auto flex justify-between items-center">
+    <div className="w-full min-h-screen bg-[#f5f5f5]">
+      <header className="w-full bg-[#004182] text-white px-6 py-3 shadow-xl">
+        <div className="mx-auto flex justify-between items-center">
           <div className="flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8 mr-2">
               <path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"></path>
             </svg>
-            <span className="font-semibold">SALES NAVIGATOR</span>
+            <span className="tracking-widest">SALES NAVIGATOR</span>
           </div>
           <div className="flex items-center">
             <button className="mr-4">
@@ -109,17 +109,17 @@ export default function LinkedInSSIClone() {
           </div>
         </div>
       </header>
-      <main className="max-w-6xl mx-auto mt-8 p-4">
-        <h1 className="text-3xl font-bold mb-8">Your Social Selling Index</h1>
+      <main className="max-w-[1127.9px] mx-auto mt-6 p-4">
+        <h1 className="text-3xl text-[#181818] mb-4">Your Social Selling Index</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <div className="bg-white p-6 rounded-lg shadow">
+          <div className="bg-white p-6 rounded-sm border-[#d0d0d0] shadow">
             <h2 className="text-lg font-semibold mb-2">Industry SSI rank</h2>
             <div className="flex items-baseline">
               <span className="text-4xl font-bold">Top</span>
               <span className="text-6xl font-bold ml-2">{industryRank}%</span>
             </div>
           </div>
-          <div className="bg-white p-6 rounded-lg shadow">
+          <div className="bg-white p-6 rounded-sm border-[#d0d0d0] shadow">
             <h2 className="text-lg font-semibold mb-2">Network SSI rank</h2>
             <div className="flex items-baseline">
               <span className="text-4xl font-bold">Top</span>
@@ -127,7 +127,7 @@ export default function LinkedInSSIClone() {
             </div>
           </div>
         </div>
-        <div className="bg-white p-6 rounded-lg shadow mb-8">
+        <div className="bg-white p-6 mb-8 rounded-sm border-[#d0d0d0] shadow">
           <div className="flex justify-between items-start mb-6">
             <h2 className="text-xl font-semibold">Current Social Selling Index <Info className="inline w-4 h-4" /></h2>
             <h3 className="text-lg font-semibold">Four components of your score</h3>
@@ -171,7 +171,7 @@ export default function LinkedInSSIClone() {
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <div className="bg-white p-6 rounded-lg shadow">
+          <div className="bg-white p-6 rounded-sm border-[#d0d0d0] shadow">
             <h2 className="text-xl font-semibold mb-4">People in your industry</h2>
             <div className="flex items-center mb-4">
               <div className="w-24 h-24 mr-4">
@@ -195,7 +195,7 @@ export default function LinkedInSSIClone() {
             <p>You rank in the top {industryRank}%</p>
             <p className="text-sm text-gray-600">No change since last week</p>
           </div>
-          <div className="bg-white p-6 rounded-lg shadow">
+          <div className="bg-white p-6 rounded-sm border-[#d0d0d0] shadow">
             <h2 className="text-xl font-semibold mb-4">People in your network</h2>
             <div className="flex items-center mb-4">
               <div className="w-24 h-24 mr-4">

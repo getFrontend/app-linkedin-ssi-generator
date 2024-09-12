@@ -5,8 +5,8 @@ import { Inter } from 'next/font/google'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'LinkedIn SSI Clone',
-  description: 'A clone of the LinkedIn Social Selling Index page',
+  title: 'LinkedIn SSI generator',
+  description: 'Fake LinkedIn SSI (Social Selling Index) Generator',
 }
 
 export default function RootLayout({

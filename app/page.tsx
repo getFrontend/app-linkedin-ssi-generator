@@ -6,6 +6,7 @@ import 'react-circular-progressbar/dist/styles.css'
 import { motion } from 'framer-motion'
 import { Info } from 'lucide-react'
 import SegmentedCircularProgressbar from '@/components/SegmentedCircularProgressbar'
+import { calculateComponents, calculateRanks } from '@/lib/utils'
 
 export default function LinkedInSSIClone() {
   const [ssiScore, setSSIScore] = useState<number | null>(null)
@@ -14,34 +15,6 @@ export default function LinkedInSSIClone() {
   const [networkRank, setNetworkRank] = useState(0)
   const [value, setValue] = useState<number>(1);
 
-  const calculateComponents = (score: number) => {
-    const total = score
-    let remaining = total
-    const componentNames = [
-      'Establish your professional brand',
-      'Find the right people',
-      'Engage with insights',
-      'Build relationships'
-    ]
-    const colors = ['#e55800', '#827be9', '#087889', '#0091ca']
-    const result = []
-    for (let i = 0; i < 3; i++) {
-      const componentScore = Math.min(Math.floor(Math.random() * remaining), 25)
-      result.push({
-        name: componentNames[i],
-        score: componentScore,
-        color: colors[i]
-      })
-      remaining -= componentScore
-    }
-    result.push({
-      name: componentNames[3],
-      score: remaining,
-      color: colors[3]
-    })
-    return result
-  }
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
@@ -49,8 +22,9 @@ export default function LinkedInSSIClone() {
     if (score >= 1 && score <= 100) {
       setSSIScore(score)
       setComponents(calculateComponents(score))
-      setIndustryRank(Math.floor(Math.random() * 100))
-      setNetworkRank(Math.floor(Math.random() * 100))
+      const ranks = calculateRanks(score)
+      setIndustryRank(ranks.industryRank)
+      setNetworkRank(ranks.networkRank)
     }
   }
 

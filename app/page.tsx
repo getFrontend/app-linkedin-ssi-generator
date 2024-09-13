@@ -2,7 +2,6 @@
 
 import { useState, ChangeEvent  } from 'react'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
-import 'react-circular-progressbar/dist/styles.css'
 import { motion } from 'framer-motion'
 import { Info } from 'lucide-react'
 import SegmentedCircularProgressbar from '@/components/SegmentedCircularProgressbar'
@@ -84,6 +83,7 @@ export default function LinkedInSSIClone() {
           </div>
         </div>
       </header>
+
       <main className="max-w-[1128px] mx-auto pt-[56px] px-[30px]">
         <h1 className="text-[32px] text-[#181818] mt-8 mb-4">Your Social Selling Index</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
@@ -116,6 +116,7 @@ export default function LinkedInSSIClone() {
               <div className="w-64 h-64">
                     <SegmentedCircularProgressbar
                       value={ssiScore}
+                      stroke={7}
                       segments={components.map(c => ({ value: c.score, color: c.color }))}
                     />
                 </div>
@@ -142,8 +143,8 @@ export default function LinkedInSSIClone() {
                     </div>
                     <div className="flex gap-4 items-center">
                       <div>
-                        <span className="text-[#1b2437] font-semibold">{component.score.toFixed(2)}</span> 
-                        <span className="font-light"> | {component.name}</span>
+                        <span className="font-semibold">{component.score.toFixed(2)} | </span> 
+                        <span className="font-light">{component.name}</span>
                       </div>
                       <Info className="w-5 h-5" />
                     </div>
@@ -155,53 +156,51 @@ export default function LinkedInSSIClone() {
 
         {/* People in your industry section */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <div className="bg-white p-6 rounded-sm border-[#d0d0d0] shadow">
-            <h2 className="text-xl font-semibold mb-4">People in your industry</h2>
-            <div className="flex items-center mb-4">
-              <div className="w-24 h-24 mr-4">
-                <CircularProgressbar
-                  value={35}
-                  text={`35`}
-                  styles={buildStyles({
-                    textSize: '24px',
-                    pathTransitionDuration: 1,
-                    pathColor: `#0073b1`,
-                    textColor: '#0073b1',
-                    trailColor: '#d6d6d6',
-                  })}
-                />
+          <div className="bg-white p-3 rounded-sm border-[#d0d0d0] shadow">
+            <h4 className="text-2xl">People in your industry</h4>
+            <div className="grid grid-cols-1 md:grid-cols-2">
+              <div className="flex justify-center items-center gap-4">
+                <div className="w-[150px] h-[150px]">
+                <SegmentedCircularProgressbar
+                        value={36}
+                        stroke={10}
+                        segments={components.map(c => ({ value: c.score, color: c.color }))}
+                      />
+                </div>
+                <p className="mr-3 flex flex-col text-center text-[#1b2437]">
+                  <span className="text-5xl font-light">36</span> 
+                  <span className="text-[#666666] font-light -mt-1">out of 100</span>
+              </p>
               </div>
-              <div>
-                <p>out of 100</p>
-                <p className="text-sm text-gray-600">Sales professionals in the Technology, Information and Internet industry have an average SSI of 35.</p>
+              <div className="border-l border-[#d9d9d9] pl-5 py-5 flex flex-col gap-3">
+                <p className="text-lg leading-[21.5px]">Sales professionals in the Technology, Information and Internet industry have an <span className="font-semibold">average SSI of 36.</span></p>
+                <p className="text-lg leading-[21.5px]">You rank in the <span className="font-semibold">top {industryRank}%</span></p>
+                <p className="text-sm font-light"><span className="font-semibold">No change</span> since last week</p>
               </div>
             </div>
-            <p>You rank in the top {industryRank}%</p>
-            <p className="text-sm text-gray-600">No change since last week</p>
           </div>
-          <div className="bg-white p-6 rounded-sm border-[#d0d0d0] shadow">
-            <h2 className="text-xl font-semibold mb-4">People in your network</h2>
-            <div className="flex items-center mb-4">
-              <div className="w-24 h-24 mr-4">
-                <CircularProgressbar
-                  value={33}
-                  text={`33`}
-                  styles={buildStyles({
-                    textSize: '24px',
-                    pathTransitionDuration: 1,
-                    pathColor: `#0073b1`,
-                    textColor: '#0073b1',
-                    trailColor: '#d6d6d6',
-                  })}
-                />
+          <div className="bg-white p-3 rounded-sm border-[#d0d0d0] shadow">
+            <h4 className="text-2xl">People in your network</h4>
+            <div className="grid grid-cols-1 md:grid-cols-2">
+              <div className="flex justify-center items-center gap-6 h-[190px] border-r border-[#d9d9d9] ">
+                <div className="w-150px] h-[150px]">
+                <SegmentedCircularProgressbar
+                        value={33}
+                        stroke={10}
+                        segments={components.map(c => ({ value: c.score, color: c.color }))}
+                      />
+                </div>
+                <p className="mr-3 flex flex-col text-center text-[#1b2437]">
+                  <span className="text-5xl font-light">33</span> 
+                  <span className="text-[#666666] font-light -mt-1">out of 100</span>
+              </p>
               </div>
-              <div>
-                <p>out of 100</p>
-                <p className="text-sm text-gray-600">People in your network have an average SSI of 33.</p>
+              <div className="pl-5 py-5 flex flex-col gap-3 justify-center">
+                <p className="text-lg leading-[21.5px]">People in your network have an <span className="font-semibold">average SSI of 33.</span></p>
+                <p className="text-lg leading-[21.5px]">You rank in the <span className="font-semibold">top {networkRank}%</span></p>
+                <p className="text-sm font-light"><span className="font-semibold">No change</span> since last week</p>
               </div>
             </div>
-            <p>You rank in the top {networkRank}%</p>
-            <p className="text-sm text-gray-600">No change since last week</p>
           </div>
         </div>
         <div className="bg-white p-6 rounded-lg shadow flex items-center justify-between">

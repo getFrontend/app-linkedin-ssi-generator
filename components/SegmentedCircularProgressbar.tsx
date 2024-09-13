@@ -8,6 +8,7 @@ interface Segment {
 interface SegmentedCircularProgressbarProps {
   value: number;
   segments: Segment[];
+  stroke: number;
 }
 
 interface CartesianCoordinate {
@@ -15,9 +16,9 @@ interface CartesianCoordinate {
   y: number;
 }
 
-const SegmentedCircularProgressbar: React.FC<SegmentedCircularProgressbarProps> = ({ value, segments }) => {
+const SegmentedCircularProgressbar: React.FC<SegmentedCircularProgressbarProps> = ({ value, segments, stroke }) => {
   const radius = 45;
-  const strokeWidth = 7;
+  const strokeWidth = stroke;
   const normalizedRadius = radius - strokeWidth / 2;
   const circumference = 2 * Math.PI * normalizedRadius;
   const gapSize = 2; // Size of the gap between segments in degrees

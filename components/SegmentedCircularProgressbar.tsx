@@ -10,37 +10,54 @@ interface SegmentedCircularProgressbarProps {
   segments: Segment[];
 }
 
+interface CartesianCoordinate {
+  x: number;
+  y: number;
+}
+
 const SegmentedCircularProgressbar: React.FC<SegmentedCircularProgressbarProps> = ({ value, segments }) => {
   const radius = 45;
-  const circumference = 2 * Math.PI * radius;
-  const fillPercentage = (value / 100) * circumference;
-  let startAngle = -90;
-  let totalValue = 0;
+  const strokeWidth = 7;
+  const normalizedRadius = radius - strokeWidth / 2;
+  const circumference = 2 * Math.PI * normalizedRadius;
+  const gapSize = 2; // Size of the gap between segments in degrees
+  const fillPercentage = (value / 100) * (360 - segments.length * gapSize);
+  let startAngle = -90; // Start from the top
+  
+  const createArc = (startAngle: number, endAngle: number, color: string): string => {
+    const start = polarToCartesian(50, 50, normalizedRadius, startAngle);
+    const end = polarToCartesian(50, 50, normalizedRadius, endAngle);
+    const largeArcFlag = endAngle - startAngle <= 180 ? 0 : 1;
+    return `M ${start.x} ${start.y} A ${normalizedRadius} ${normalizedRadius} 0 ${largeArcFlag} 1 ${end.x} ${end.y}`;
+  }
+
+  const polarToCartesian = (centerX: number, centerY: number, radius: number, angleInDegrees: number): CartesianCoordinate => {
+    const angleInRadians = (angleInDegrees - 90) * Math.PI / 180.0;
+    return {
+      x: centerX + (radius * Math.cos(angleInRadians)),
+      y: centerY + (radius * Math.sin(angleInRadians))
+    };
+  }
 
   return (
-    <svg viewBox="0 0 100 100" className="w-full h-full transform">
-      <circle cx="50" cy="50" r={radius} fill="none" stroke="#e0e0e0" strokeWidth="7" />
+    <svg viewBox="0 0 100 100" className="w-full h-full transform rotate-90">
+      <circle 
+        cx="50" 
+        cy="50" 
+        r={normalizedRadius} 
+        fill="none" 
+        stroke="#e1e9ee" 
+        strokeWidth={strokeWidth} 
+      />
       {segments.map((segment, index) => {
-        const segmentPercentage = (segment.value / value) * fillPercentage;
-        const segmentLength = (segmentPercentage / circumference) * 360;
-        totalValue += segment.value;
+        const segmentLength = (segment.value / value) * fillPercentage;
         const endAngle = startAngle + segmentLength;
-        const largeArcFlag = segmentLength > 180 ? 1 : 0;
-        const x1 = 50 + radius * Math.cos((startAngle * Math.PI) / 180);
-        const y1 = 50 + radius * Math.sin((startAngle * Math.PI) / 180);
-        const x2 = 50 + radius * Math.cos((endAngle * Math.PI) / 180);
-        const y2 = 50 + radius * Math.sin((endAngle * Math.PI) / 180);
-
-        const pathData = `M ${x1} ${y1} A ${radius} ${radius} 0 ${largeArcFlag} 1 ${x2} ${y2}`;
-
-        startAngle = endAngle;
-        return <path key={index} d={pathData} fill="none" stroke={segment.color} strokeWidth="7" />;
+        const path = createArc(startAngle, endAngle - gapSize / 2, segment.color);
+        startAngle = endAngle + gapSize / 2;
+        return <path key={index} d={path} fill="none" stroke={segment.color} strokeWidth={strokeWidth} />;
       })}
-      <text x="50" y="50" textAnchor="middle" dy="0.3em" className="font-bold text-3xl fill-current transform rotate-90">
-        {value}
-      </text>
     </svg>
   );
-};
+}
 
 export default SegmentedCircularProgressbar;

@@ -134,12 +134,12 @@ export default function LinkedInSSIClone() {
         </div>
 
         {/* Current Social Selling Index section */}
-        <div className="bg-white p-6 mb-8 flex flex-col rounded-sm border-[#d0d0d0] shadow">
+        <div className="bg-white p-4 mb-8 flex flex-col rounded-sm border-[#d0d0d0] shadow">
           <h2 className="text-2xl">Current Social Selling Index <Info className="inline w-4 h-4" /></h2>
           <div className="grid grid-cols-1 md:grid-cols-2">
             {/* Circle */}
-            <div className="pt-8 flex flex-row gap-10 flex-wrap justify-center items-center">
-              <div className="w-60 h-60">
+            <div className="flex flex-row gap-8 flex-wrap justify-center items-center">
+              <div className="w-64 h-64">
                     <SegmentedCircularProgressbar
                       value={ssiScore}
                       segments={components.map(c => ({ value: c.score, color: c.color }))}

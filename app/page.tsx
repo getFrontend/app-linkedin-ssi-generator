@@ -8,7 +8,7 @@ import { calculateComponents, calculateRanks } from "@/lib/utils";
 import Preloader from "@/components/ui/Preloader";
 import Link from "next/link";
 import Image from "next/image";
-import { profileImg } from "@/constants";
+import { profileImg, targetImg } from "@/constants";
 
 export default function LinkedInSSIClone() {
   const [ssiScore, setSSIScore] = useState<number | null>(null);
@@ -119,27 +119,27 @@ export default function LinkedInSSIClone() {
         </div>
       </header>
 
-      <main className="max-w-[1128px] mx-auto pt-[56px] px-[30px]">
+      <main className="max-w-[1128px] mx-auto pb-8 pt-[56px] px-[30px]">
         <h1 className="text-[32px] text-[#181818] mt-8 mb-4">
           Your Social Selling Index
         </h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <div className="bg-white flex flex-row-reverse justify-end p-4 rounded-sm border-[#d0d0d0] shadow">
-            <div className="flex-grow text-2xl mt-2 ml-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div className="h-[92px] bg-white flex flex-row-reverse justify-end p-4 rounded-sm shadow-border">
+            <div className="flex-grow text-2xl pt-2 pl-4">
               Industry SSI rank
             </div>
             <div className="flex flex-col items-baseline">
-              <p className="mt-4 text-2xl text-[#666666] italic">Top</p>
+              <p className="pt-3 text-2xl text-[#666666] italic">Top</p>
               <p className="flex-grow text-[40px]">
                 <span className="mx-1">{industryRank}</span>
                 <span className="text-2xl text-[#666666]">%</span>
               </p>
             </div>
           </div>
-          <div className="bg-white flex flex-row-reverse justify-end p-4 rounded-sm border-[#d0d0d0] shadow">
-            <div className="flex-grow text-2xl mt-2 ml-4">Network SSI rank</div>
+          <div className="h-[92px] bg-white flex flex-row-reverse justify-end p-4 rounded-sm shadow-border">
+            <div className="flex-grow text-2xl pt-2 pl-4">Network SSI rank</div>
             <div className="flex flex-col items-baseline">
-              <p className="mt-4 text-2xl text-[#666666] italic">Top</p>
+              <p className="pt-3 text-2xl text-[#666666] italic">Top</p>
               <p className="flex-grow text-[40px]">
                 <span className="mx-1">{networkRank}</span>
                 <span className="text-2xl text-[#666666]">%</span>
@@ -149,9 +149,17 @@ export default function LinkedInSSIClone() {
         </div>
 
         {/* Current Social Selling Index section */}
-        <div className="bg-white p-4 mb-8 flex flex-col rounded-sm border-[#d0d0d0] shadow">
-          <h2 className="text-2xl">
-            Current Social Selling Index <Info className="inline w-4 h-4" />
+        <div className="bg-white p-4 mb-6 flex flex-col rounded-sm shadow-border">
+          <h2 className="flex items-center gap-3">
+            <span className="text-2xl">Current Social Selling Index</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="#7b7b7b"
+              className="w-6 h-6"
+            >
+              <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18.23c-4.538 0-8.23-3.692-8.23-8.23S7.462 3.77 12 3.77s8.23 3.692 8.23 8.23-3.692 8.23-8.23 8.23zM11 16h2v2h-2v-2zm5-6.75V10c0 1.657-1.343 2.875-3 2.875V14h-2v-1a2 2 0 012-2h.275a.85.85 0 00.85-.85v-1.3a.85.85 0 00-.85-.85h-2.55a.85.85 0 00-.85.85V10H8v-.75A3.25 3.25 0 0111.25 6h1.5A3.25 3.25 0 0116 9.25z"></path>
+            </svg>
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2">
             {/* Circle */}
@@ -179,7 +187,7 @@ export default function LinkedInSSIClone() {
                 Four components of your score
               </h3>
               {components.map((component, index) => (
-                <div key={index} className="mb-4 flex flex-col gap-3">
+                <div key={index} className="mb-4 flex flex-col gap-2">
                   <div className="w-full bg-[#e1e9ee] rounded-sm h-4">
                     <motion.div
                       className="h-4 rounded-sm"
@@ -189,14 +197,21 @@ export default function LinkedInSSIClone() {
                       transition={{ duration: 1 }}
                     ></motion.div>
                   </div>
-                  <div className="flex gap-4 items-center">
+                  <div className="flex gap-3 items-center">
                     <div>
                       <span className="font-semibold">
-                        {component.score.toFixed(2)} |{" "}
+                        {component.score.toFixed(3)} |{" "}
                       </span>
                       <span className="font-light">{component.name}</span>
                     </div>
-                    <Info className="w-5 h-5" />
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="#7b7b7b"
+                      className="w-6 h-6"
+                    >
+                      <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18.23c-4.538 0-8.23-3.692-8.23-8.23S7.462 3.77 12 3.77s8.23 3.692 8.23 8.23-3.692 8.23-8.23 8.23zM11 16h2v2h-2v-2zm5-6.75V10c0 1.657-1.343 2.875-3 2.875V14h-2v-1a2 2 0 012-2h.275a.85.85 0 00.85-.85v-1.3a.85.85 0 00-.85-.85h-2.55a.85.85 0 00-.85.85V10H8v-.75A3.25 3.25 0 0111.25 6h1.5A3.25 3.25 0 0116 9.25z"></path>
+                    </svg>
                   </div>
                 </div>
               ))}
@@ -205,8 +220,8 @@ export default function LinkedInSSIClone() {
         </div>
 
         {/* People in your industry section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <div className="bg-white p-3 rounded-sm border-[#d0d0d0] shadow">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+          <div className="bg-white p-3 rounded-sm shadow-border">
             <h4 className="text-2xl">People in your industry</h4>
             <div className="grid grid-cols-1 md:grid-cols-2">
               <div className="flex justify-center items-center gap-4">
@@ -244,7 +259,7 @@ export default function LinkedInSSIClone() {
               </div>
             </div>
           </div>
-          <div className="bg-white p-3 rounded-sm border-[#d0d0d0] shadow">
+          <div className="bg-white p-3 rounded-sm shadow-border">
             <h4 className="text-2xl">People in your network</h4>
             <div className="grid grid-cols-1 md:grid-cols-2">
               <div className="flex justify-center items-center gap-6 h-[190px] border-r border-[#d9d9d9] ">
@@ -282,22 +297,17 @@ export default function LinkedInSSIClone() {
             </div>
           </div>
         </div>
-        <div className="bg-white p-6 rounded-lg shadow flex items-center justify-between">
-          <div className="flex items-center">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="w-12 h-12 mr-4 text-[#0073b1]"
-            >
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.88-11.71L10 14.17l-1.88-1.88a.996.996 0 1 0-1.41 1.41l2.59 2.59c.39.39 1.02.39 1.41 0L17.3 9.7a.996.996 0 0 0 0-1.41c-.39-.39-1.03-.39-1.42 0z" />
-            </svg>
-            <p className="text-lg">
+
+        {/* Last section aka Footer */}
+        <div className="bg-white p-4 rounded-sm flex items-center gap-3 shadow-border">
+          <div className="flex items-center gap-3">
+            <Image src={targetImg} width={48} height={48} alt="target icon" />
+            <p className="text-[20px]">
               Find the right decision makers and shorten your sales cycle with
               LinkedIn Sales Navigator.
             </p>
           </div>
-          <button className="bg-[#0073b1] text-white px-4 py-2 rounded hover:bg-[#005d8f]">
+          <button className="bg-[#0073b1] text-white font-semibold px-4 py-[10px] rounded hover:bg-[#005d8f]">
             Learn more
           </button>
         </div>

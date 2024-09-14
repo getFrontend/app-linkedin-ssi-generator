@@ -39,6 +39,10 @@ body {
     text-wrap: balance;
   }
 
+  .shadow-border {
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .15);
+  }
+
   /* Preloader */
   .initial-load-animation {
     padding-top: 96px;

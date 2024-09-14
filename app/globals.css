@@ -38,4 +38,59 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+
+  /* Preloader */
+  .initial-load-animation {
+    padding-top: 96px;
+    width: 200px;
+    margin: 0 auto;
+    transform: scale(1);
+    transition: transform .5s ease;
+  }
+  .salesnav-image {
+    background-image: url('https://static.licdn.com/aero-v1/sc/h/v4ody32j7r2zqlkj9lxg96x3');
+    height: 55px;
+    width: 55px;
+    margin: 0 auto;
+    margin-bottom: 32px;
+    transform: translate(0, 0);
+    opacity: 1;
+    transition: all .5s ease-out;
+  }
+  .loading-bar {
+    width: 130px;
+    height: 2px;
+    margin: 0 auto;
+    border-radius: 2px;
+    background-color: #CFCFCF;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    transform: rotateY(0);
+    transition: transform .3s ease-in;
+  }
+  .blue-bar {
+    height: 100%;
+    width: 68px;
+    position: absolute;
+    transform: translate(-34px, 0);
+    background-color: #0073B1;
+    border-radius: 2px;
+    animation: initial-loading 1.5s infinite ease;
+  }
+  @keyframes initial-loading {
+    0% {
+      transform: translate(-34px, 0);
+    }
+    50% {
+      transform: translate(96px, 0);
+    }
+    100% {
+      transform: translate(-34px, 0);
+    }
+  }
+  .boot-complete .initial-loading-state,
+  .hide-loading.initial-loading-state {
+    display: none;
+  }
 }

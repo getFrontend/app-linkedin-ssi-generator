@@ -6,6 +6,7 @@ import { motion } from 'framer-motion'
 import { Info } from 'lucide-react'
 import SegmentedCircularProgressbar from '@/components/SegmentedCircularProgressbar'
 import { calculateComponents, calculateRanks } from '@/lib/utils'
+import Preloader from '@/components/ui/Preloader'
 
 export default function LinkedInSSIClone() {
   const [ssiScore, setSSIScore] = useState<number | null>(null)
@@ -13,18 +14,23 @@ export default function LinkedInSSIClone() {
   const [industryRank, setIndustryRank] = useState(0)
   const [networkRank, setNetworkRank] = useState(0)
   const [value, setValue] = useState<number>(1);
+  const [isLoading, setIsLoading] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setIsLoading(true)
     const formData = new FormData(e.currentTarget)
     const score = Number(formData.get('ssi'))
     if (score >= 1 && score <= 100) {
+      // Simulate an API call
+      await new Promise(resolve => setTimeout(resolve, 2000))
       setSSIScore(score)
       setComponents(calculateComponents(score))
       const ranks = calculateRanks(score)
       setIndustryRank(ranks.industryRank)
       setNetworkRank(ranks.networkRank)
     }
+    setIsLoading(false)
   }
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -44,6 +50,7 @@ export default function LinkedInSSIClone() {
   if (ssiScore === null) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-[#f5f5f5]">
+        {isLoading && <Preloader />}
         <form onSubmit={handleSubmit} className="bg-white px-12 py-8 rounded-lg shadow-xl flex flex-col">
           <h2 className="text-2xl text-center font-bold mb-4">Enter your desired SSI</h2>
           <p className="mb-6 text-center">from 0 to 100 points</p>

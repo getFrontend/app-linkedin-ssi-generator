@@ -88,7 +88,7 @@ export default function LinkedInSSIClone() {
     <div className="w-full min-h-screen bg-[#f5f5f5]">
       <header className="w-full h-[56px] flex fixed top-0 left-0 right-0 z-10 bg-[#004182] text-white shadow-xl">
         <div className="w-[1215px] mx-6 flex flex-1 justify-between items-center">
-          <Link href="/" className="flex items-center">
+          <Link href="/" className="h-full flex items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 26 26"
@@ -97,7 +97,9 @@ export default function LinkedInSSIClone() {
             >
               <path d="M26 2v22a2 2 0 01-2 2H2a2 2 0 01-2-2V2a2 2 0 012-2h22a2 2 0 012 2zM8 10H4v12h4zm.25-4A2.19 2.19 0 006 3.8a2.2 2.2 0 100 4.4A2.19 2.19 0 008.25 6zM22 14.56c0-3.65-2.29-4.9-4.47-4.9a4.46 4.46 0 00-3.78 2.05h-.05V10H10v12h4v-6.53a2.26 2.26 0 012.21-2.57c1.1 0 1.79.59 1.79 2.52V22h4z"></path>
             </svg>
-            <span className="pl-2 tracking-[3px]">SALES NAVIGATOR</span>
+            <span className="h-full flex items-center px-2 tracking-[3px] hover:bg-[#003c78]">
+              SALES NAVIGATOR
+            </span>
           </Link>
           <div className="h-full pl-2 border-l border-[#144b83] flex">
             <div className="h-full px-3 flex items-center hover:bg-[#003c78]">

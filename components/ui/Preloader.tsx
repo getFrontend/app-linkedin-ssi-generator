@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 const Preloader = () => {
   return (
@@ -9,10 +9,10 @@ const Preloader = () => {
           <div className="loading-bar">
             <div className="blue-bar"></div>
           </div>
+        </div>
       </div>
-     </div>
     </div>
-  )
-}
+  );
+};
 
-export default Preloader
+export default Preloader;

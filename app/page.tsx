@@ -2,7 +2,6 @@
 
 import { useState, ChangeEvent } from "react";
 import { motion } from "framer-motion";
-import { Info } from "lucide-react";
 import SegmentedCircularProgressbar from "@/components/SegmentedCircularProgressbar";
 import { calculateComponents, calculateRanks } from "@/lib/utils";
 import Preloader from "@/components/ui/Preloader";

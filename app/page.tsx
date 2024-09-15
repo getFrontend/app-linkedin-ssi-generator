@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useRef } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import Preloader from "@/components/ui/Preloader";
@@ -8,6 +8,11 @@ import Header from "@/components/ui/Header";
 import SegmentedCircularProgressbar from "@/components/SegmentedCircularProgressbar";
 import { calculateComponents, calculateRanks } from "@/lib/utils";
 import { targetImg } from "@/constants";
+import ScreenshotBtn from "@/components/ui/ScreenshotBtn";
+
+interface CustomDisplayMediaOptions extends DisplayMediaStreamOptions {
+  preferCurrentTab?: boolean;
+}
 
 export default function LinkedInSSIClone() {
   const [ssiScore, setSSIScore] = useState<number | null>(null);
@@ -18,6 +23,8 @@ export default function LinkedInSSIClone() {
   const [networkRank, setNetworkRank] = useState(0);
   const [value, setValue] = useState<number>(1);
   const [isLoading, setIsLoading] = useState(false);
+  const [isScreenshotting, setIsScreenshotting] = useState(false);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -47,6 +54,46 @@ export default function LinkedInSSIClone() {
       setValue(1);
     } else {
       setValue(numericValue);
+    }
+  };
+
+  const handleScreenshot = async () => {
+    setIsScreenshotting(true);
+    try {
+      const stream = await navigator.mediaDevices.getDisplayMedia({
+        preferCurrentTab: true,
+      } as CustomDisplayMediaOptions);
+
+      const video = document.createElement("video");
+      await new Promise<void>((resolve) => {
+        video.onloadedmetadata = () => resolve();
+        video.srcObject = stream;
+      });
+      video.play();
+      const canvas = document.createElement("canvas");
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const context = canvas.getContext("2d");
+      if (context) {
+        context.drawImage(video, 0, 0);
+      }
+      stream.getTracks().forEach((track) => track.stop());
+      const blob = await new Promise<Blob | null>((resolve) =>
+        canvas.toBlob(resolve, "image/png")
+      );
+      if (blob) {
+        await navigator.clipboard.write([
+          new ClipboardItem({ "image/png": blob }),
+        ]);
+        alert("Screenshot copied to clipboard as PNG!");
+      } else {
+        throw new Error("Failed to create blob");
+      }
+    } catch (err) {
+      console.error("Error: " + err);
+      alert("Failed to capture screenshot. Please try again.");
+    } finally {
+      setIsScreenshotting(false);
     }
   };
 
@@ -87,7 +134,10 @@ export default function LinkedInSSIClone() {
     <div className="w-full min-h-screen bg-[#f5f5f5]">
       <Header />
 
-      <main className="max-w-[1128px] mx-auto pb-8 pt-[56px] px-[30px]">
+      <main
+        className="max-w-[1128px] mx-auto pb-8 pt-[56px] px-[30px]"
+        ref={contentRef}
+      >
         <h1 className="text-[32px] text-[#181818] mt-8 mb-4">
           Your Social Selling Index
         </h1>
@@ -280,6 +330,11 @@ export default function LinkedInSSIClone() {
           </button>
         </div>
       </main>
+
+      <ScreenshotBtn
+        handleScreenshot={handleScreenshot}
+        isScreenshotting={isScreenshotting}
+      />
     </div>
   );
 }

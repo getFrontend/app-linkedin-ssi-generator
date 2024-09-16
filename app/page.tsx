@@ -9,6 +9,7 @@ import SegmentedCircularProgressbar from "@/components/SegmentedCircularProgress
 import { calculateComponents, calculateRanks } from "@/lib/utils";
 import { targetImg } from "@/constants";
 import ScreenshotBtn from "@/components/ui/ScreenshotBtn";
+import ChatBtn from "@/components/ui/ChatBtn";
 
 interface CustomDisplayMediaOptions extends DisplayMediaStreamOptions {
   preferCurrentTab?: boolean;
@@ -335,6 +336,7 @@ export default function LinkedInSSIClone() {
         handleScreenshot={handleScreenshot}
         isScreenshotting={isScreenshotting}
       />
+      <ChatBtn />
     </div>
   );
 }

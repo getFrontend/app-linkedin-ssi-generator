@@ -139,7 +139,7 @@ export default function LinkedInSSIClone() {
         {isLoading && <Preloader />}
         <form
           onSubmit={handleSubmit}
-          className="bg-white px-14 py-10 rounded-lg shadow-xl flex flex-col"
+          className="w-full sm:w-1/2 md:max-w-64 bg-white px-4 sm:px-6 md:px-14 py-10 rounded-lg shadow-xl flex flex-col"
         >
           <h2 className="mb-4 text-2xl text-center font-semibold">
             Enter your{" "}

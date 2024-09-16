@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, ChangeEvent, useRef } from "react";
+import { useState, ChangeEvent, useRef, useEffect } from "react";
+import { Dice6 } from "lucide-react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import Preloader from "@/components/ui/Preloader";
@@ -22,10 +23,58 @@ export default function LinkedInSSIClone() {
   >([]);
   const [industryRank, setIndustryRank] = useState(0);
   const [networkRank, setNetworkRank] = useState(0);
-  const [value, setValue] = useState<number>(1);
+  const [value, setValue] = useState<number>(25);
   const [isLoading, setIsLoading] = useState(false);
   const [isScreenshotting, setIsScreenshotting] = useState(false);
+  const [isRolling, setIsRolling] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Cleanup function to cancel animation if component unmounts
+    return () => {
+      setIsRolling(false);
+    };
+  }, []);
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const inputValue = e.target.value;
+
+    const numericValue = Number(inputValue);
+
+    if (numericValue > 100) {
+      setValue(100);
+    } else if (numericValue < 1) {
+      setValue(1);
+    } else {
+      setValue(numericValue);
+    }
+  };
+
+  const generateRandomScore = () => {
+    setIsRolling(true);
+    let duration = 1000; // 1 second
+    let startTime = Date.now();
+
+    const roll = () => {
+      const now = Date.now();
+      const elapsedTime = now - startTime;
+
+      if (elapsedTime < duration) {
+        const randomScore = Math.floor(Math.random() * 100) + 1;
+        setValue(randomScore);
+
+        requestAnimationFrame(roll);
+      } else {
+        const finalScore = Math.floor(Math.random() * 100) + 1;
+        setValue(finalScore);
+
+        setIsRolling(false);
+      }
+    };
+
+    requestAnimationFrame(roll);
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -42,20 +91,6 @@ export default function LinkedInSSIClone() {
       setNetworkRank(ranks.networkRank);
     }
     setIsLoading(false);
-  };
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const inputValue = e.target.value;
-
-    const numericValue = Number(inputValue);
-
-    if (numericValue > 100) {
-      setValue(100);
-    } else if (numericValue < 1) {
-      setValue(1);
-    } else {
-      setValue(numericValue);
-    }
   };
 
   const handleScreenshot = async () => {
@@ -104,25 +139,50 @@ export default function LinkedInSSIClone() {
         {isLoading && <Preloader />}
         <form
           onSubmit={handleSubmit}
-          className="bg-white px-12 py-8 rounded-lg shadow-xl flex flex-col"
+          className="bg-white px-14 py-10 rounded-lg shadow-xl flex flex-col"
         >
-          <h2 className="text-2xl text-center font-bold mb-4">
-            Enter your desired SSI
+          <h2 className="mb-4 text-2xl text-center font-semibold">
+            Enter your{" "}
+            <span className="text-[#0a66c2] font-bold">desired SSI</span>
+            <br />
+            <span className="mb-2 text-sm font-normal">
+              (from 0 to 100 points)
+            </span>
           </h2>
-          <p className="mb-6 text-center">from 0 to 100 points</p>
-          <input
-            type="number"
-            name="ssi"
-            value={value}
-            onChange={handleChange}
-            min="1"
-            max="100"
-            required
-            className="self-center w-2xl p-4 border border-gray-300 rounded mb-10 text-center text-4xl text-[#0a66c2]"
-          />
+          <p className="mb-8 flex justify-center items-center gap-1">
+            or
+            <span className="text-[#0a66c2] font-semibold">
+              try your luck with the dice
+            </span>
+            <Dice6 className="w-5 h-5" />
+          </p>
+          <div className="mb-10 flex-1 flex justify-center items-center">
+            <input
+              ref={inputRef}
+              className=" w-2xl p-2 border border-gray-300 rounded-l-lg text-center text-5xl text-[#0a66c2] focus:outline-none focus:ring-2 focus:ring-[#0a66c2] focus:border-transparent"
+              type="number"
+              name="ssi"
+              value={value}
+              onChange={handleChange}
+              min="1"
+              max="100"
+              required
+            />
+            <button
+              type="button"
+              onClick={generateRandomScore}
+              disabled={isRolling}
+              className={`p-3 bg-[#0a66c2] text-white rounded-r-lg hover:bg-[#004182] focus:outline-none focus:ring-2 focus:ring-[#0a66c2] focus:ring-offset-2 transition-colors`}
+              aria-label="Generate random score"
+            >
+              <Dice6
+                className={`w-14 h-14 ${isRolling ? "animate-spin" : ""}`}
+              />
+            </button>
+          </div>
           <button
             type="submit"
-            className="w-full bg-[#0a66c2] text-white px-2 py-4 rounded-lg hover:bg-[#0090ff]"
+            className="bg-[#0a66c2] text-white text-center px-2 py-4 rounded-lg hover:bg-[#0090ff]"
           >
             Generate LinkedIn SSI
           </button>

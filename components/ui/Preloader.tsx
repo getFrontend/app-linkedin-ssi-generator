@@ -2,7 +2,7 @@ import React from "react";
 
 const Preloader = () => {
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-white z-50">
+    <div className="fixed inset-0 flex justify-center bg-[#f5f5f5] z-50">
       <div className="initial-loading-state">
         <div className="initial-load-animation">
           <div className="salesnav-image"></div>

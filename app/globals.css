@@ -34,6 +34,18 @@ body {
   line-height: var(--hue-web-line-height-regular);
 }
 
+/* Hide arrows in input type number */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

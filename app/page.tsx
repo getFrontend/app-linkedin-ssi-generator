@@ -94,42 +94,53 @@ export default function LinkedInSSIClone() {
   };
 
   const handleScreenshot = async () => {
-    setIsScreenshotting(true);
-    try {
-      const stream = await navigator.mediaDevices.getDisplayMedia({
-        preferCurrentTab: true,
-      } as CustomDisplayMediaOptions);
+    if (contentRef.current) {
+      setIsScreenshotting(true);
+      try {
+        // Hide the screenshot button
+        const screenshotButton = document.getElementById("screenshot-button");
+        if (screenshotButton) {
+          screenshotButton.style.display = "none";
+        }
 
-      const video = document.createElement("video");
-      await new Promise<void>((resolve) => {
-        video.onloadedmetadata = () => resolve();
-        video.srcObject = stream;
-      });
-      video.play();
-      const canvas = document.createElement("canvas");
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-      const context = canvas.getContext("2d");
-      if (context) {
-        context.drawImage(video, 0, 0);
-      }
-      stream.getTracks().forEach((track) => track.stop());
-      const blob = await new Promise<Blob | null>((resolve) =>
-        canvas.toBlob(resolve, "image/png")
-      );
-      if (blob) {
+        const stream = await navigator.mediaDevices.getDisplayMedia({
+          preferCurrentTab: true,
+        });
+        const video = document.createElement("video");
+
+        await new Promise((resolve) => {
+          video.onloadedmetadata = resolve;
+          video.srcObject = stream;
+        });
+
+        video.play();
+
+        const canvas = document.createElement("canvas");
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+
+        canvas.getContext("2d")?.drawImage(video, 0, 0);
+        stream.getTracks().forEach((track) => track.stop());
+
+        const blob = await new Promise<Blob>((resolve) =>
+          canvas.toBlob(resolve, "image/png")
+        );
         await navigator.clipboard.write([
           new ClipboardItem({ "image/png": blob }),
         ]);
+
         alert("Screenshot copied to clipboard as PNG!");
-      } else {
-        throw new Error("Failed to create blob");
+      } catch (err) {
+        console.error("Error: " + err);
+        alert("Failed to capture screenshot. Please try again.");
+      } finally {
+        setIsScreenshotting(false);
+        // Show the screenshot button again
+        const screenshotButton = document.getElementById("screenshot-button");
+        if (screenshotButton) {
+          screenshotButton.style.display = "block";
+        }
       }
-    } catch (err) {
-      console.error("Error: " + err);
-      alert("Failed to capture screenshot. Please try again.");
-    } finally {
-      setIsScreenshotting(false);
     }
   };
 
@@ -393,6 +404,7 @@ export default function LinkedInSSIClone() {
       </main>
 
       <ScreenshotBtn
+        id="screenshot-button"
         handleScreenshot={handleScreenshot}
         isScreenshotting={isScreenshotting}
       />

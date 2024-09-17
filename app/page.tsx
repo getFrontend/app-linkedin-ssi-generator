@@ -93,23 +93,24 @@ export default function LinkedInSSIClone() {
     setIsLoading(false);
   };
 
-  const handleScreenshot = async () => {
+  const handleScreenshot = async (): Promise<void> => {
     if (contentRef.current) {
       setIsScreenshotting(true);
       try {
         // Hide the screenshot button
         const screenshotButton = document.getElementById("screenshot-button");
-        if (screenshotButton) {
+        if (screenshotButton instanceof HTMLElement) {
           screenshotButton.style.display = "none";
         }
 
         const stream = await navigator.mediaDevices.getDisplayMedia({
           preferCurrentTab: true,
-        });
+        } as DisplayMediaStreamOptions);
+
         const video = document.createElement("video");
 
-        await new Promise((resolve) => {
-          video.onloadedmetadata = resolve;
+        await new Promise<void>((resolve) => {
+          video.onloadedmetadata = () => resolve();
           video.srcObject = stream;
         });
 
@@ -119,12 +120,20 @@ export default function LinkedInSSIClone() {
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
 
-        canvas.getContext("2d")?.drawImage(video, 0, 0);
+        const ctx = canvas.getContext("2d");
+        if (ctx) {
+          ctx.drawImage(video, 0, 0);
+        }
+
         stream.getTracks().forEach((track) => track.stop());
 
         const blob = await new Promise<Blob>((resolve) =>
-          canvas.toBlob(resolve, "image/png")
+          canvas.toBlob((b) => {
+            if (b) resolve(b);
+            else throw new Error("Failed to create blob");
+          }, "image/png")
         );
+
         await navigator.clipboard.write([
           new ClipboardItem({ "image/png": blob }),
         ]);
@@ -137,7 +146,7 @@ export default function LinkedInSSIClone() {
         setIsScreenshotting(false);
         // Show the screenshot button again
         const screenshotButton = document.getElementById("screenshot-button");
-        if (screenshotButton) {
+        if (screenshotButton instanceof HTMLElement) {
           screenshotButton.style.display = "block";
         }
       }

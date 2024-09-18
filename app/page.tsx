@@ -185,7 +185,7 @@ export default function LinkedInSSIClone() {
               value={value}
               onChange={handleChange}
               min="1"
-              max="100"
+              max="59"
               required
             />
             <button

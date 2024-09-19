@@ -2,6 +2,8 @@
 
 The LinkedIn SSI Generator is a service that helps users calculate their Social Selling Index (SSI) score from LinkedIn.
 
+<img src="https://github.com/getFrontend/react-100-questions-ua/raw/main/public/assets/images/github-react-questions-main.jpg" />
+
 **The Social Selling Index or SSI** is a score from 0 to 100 that measures the effectiveness of your LinkedIn profile for social selling. The higher your SSI, the more lead generation and sales opportunities you get.
 
 This service automates the process of retrieving and calculating the SSI score, allowing users to gain valuable insights into their LinkedIn performance and understand how they compare to their peers.
@@ -23,10 +25,14 @@ Provides a breakdown of the four key pillars of SSI:
 
 ## Tech Stack
 
-➡ Next.JS
+➡ Next.js
+
 ➡ TypeScript
+
 ➡ Framer Motion
+
 ➡ React-circular-progressbar
+
 ➡ Tailwind CSS
 
 ### Getting Started
